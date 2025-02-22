@@ -29,7 +29,7 @@ const UpdateProduct = () => {
     };
     console.log("Submitted Data:", Data);
 
-    fetch(``, {
+    fetch(`http://localhost:5000/products/`, {
       method: "PUT",
       headers: {
         "contact-type": "application/json",
