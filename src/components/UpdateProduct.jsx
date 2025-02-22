@@ -14,7 +14,7 @@ const UpdateProduct = () => {
     //   const userEmail = form.userEmail.value;
     //   const userName = form.userName.value;
   
-      const formData = {
+      const Data = {
         image,
         itemName,
         categoryName,
@@ -27,7 +27,19 @@ const UpdateProduct = () => {
         // userEmail,
         // userName,
       };
-      console.log("Submitted Data:", formData);
+      console.log("Submitted Data:", Data);
+
+      fetch(``,{
+     method:"PUT",
+     headers:{
+        "contact-type":"application/json"
+     },
+     body:JSON.stringify(Data)
+      })
+      .then(res=>res.json())
+      .then(data=>{
+        console.log(data)
+      })
     };
   
     return (

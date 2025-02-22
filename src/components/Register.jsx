@@ -1,12 +1,13 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
-// import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { AuthContext } from "./AuthProvider";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [errorMessage, SetErrorMessage] = useState();
-//   const { users, setUser, userRegister, updateUserProfile } =
-//     useContext(AuthContext);
+ const {setUser,updateUserProfile,userRegister}=useContext(AuthContext)
+ const navigate=useNavigate()
   const [show, setShow] = useState(false);
 
   const handleFrom = (e) => {
@@ -16,7 +17,7 @@ const Register = () => {
 
     const email = e.target.email.value;
     const password = e.target.password.value;
-    // console.log(email,password)
+    console.log(email,password)
     const valid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}$/;
     if (!valid.test(password)) {
       SetErrorMessage(
@@ -27,23 +28,24 @@ const Register = () => {
 
     const name = e.target.name.value;
     const photo = e.target.photo.value;
-    // userRegister(email, password)
-    //   .then((res) => {
-    //     // console.log(res.user)
-    //     setUser(res.user);
-    //     updateUserProfile({ displayName: name, photoURL: photo })
-    //       .then(() => {
-    //         navigate("/");
-    //       })
-    //       .catch((err) => {
-    //         // console.log(err);
-    //       });
-    //     toast.success("user successfully signed in");
-    //   })
-    //   .catch((err) => {
-    //     // console.log(err.message)
-    //     toast.error("Invalid User", err.message);
-    //   });
+    userRegister(email, password)
+      .then((res) => {
+        console.log(res.user)
+        setUser(res.user);
+        navigate("/")
+        // updateUserProfile({ displayName: name, photoURL: photo })
+        //   .then(() => {
+        //     navigate("/");
+        //   })
+        //   .catch((err) => {
+        //     // console.log(err);
+        //   });
+        toast.success("user successfully signed in");
+      })
+      .catch((err) => {
+        console.log(err.message)
+        // toast.error("Invalid User", err.message);
+      });
   };
 
   return (

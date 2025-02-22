@@ -8,6 +8,7 @@ import AboutUs from '../components/AboutUs';
 import AddProduct from '../components/AddProduct';
 import Login from '../components/Login';
 import Register from '../components/Register';
+import MyEquipmentList from '../components/MyEquipmentList';
 
 const Route = createBrowserRouter([
     {
@@ -39,6 +40,10 @@ const Route = createBrowserRouter([
                 path:"register",
                 element:<Register></Register>
             },
+            {
+                path:"equipment",
+                element:<MyEquipmentList></MyEquipmentList>,
+            }
         ]
     }
 ])
