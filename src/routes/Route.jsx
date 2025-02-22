@@ -9,6 +9,7 @@ import AddProduct from '../components/AddProduct';
 import Login from '../components/Login';
 import Register from '../components/Register';
 import MyEquipmentList from '../components/MyEquipmentList';
+import Products from '../Products';
 
 const Route = createBrowserRouter([
     {
@@ -18,7 +19,8 @@ const Route = createBrowserRouter([
         children:[
             {
                 path:"/",
-                element:<Home></Home>
+                element:<Home></Home>,
+                loader:()=>fetch("http://localhost:5000/products")
             },
             {
                 path:"contact",
@@ -43,7 +45,12 @@ const Route = createBrowserRouter([
             {
                 path:"equipment",
                 element:<MyEquipmentList></MyEquipmentList>,
-            }
+            },
+            // {
+            //     path:"products",
+            //     element:<Products></Products>,
+            //     loader:()=>fetch("http://localhost:5000/products")
+            // }
         ]
     }
 ])

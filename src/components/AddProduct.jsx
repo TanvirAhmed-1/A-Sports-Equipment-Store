@@ -1,10 +1,12 @@
+import { toast } from "react-toastify";
+
 const AddProduct = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     const image = form.image.value;
     const itemName = form.itemName.value;
-    const categoryName = form.categoryName.value;
+    const categoryName = form.categoryName.value; // This will now come from the dropdown
     const description = form.description.value;
     const price = form.price.value;
     const rating = form.rating.value;
@@ -28,17 +30,21 @@ const AddProduct = () => {
       userName,
     };
     console.log("Submitted Data:", formData);
-    // fetch("",{
-    //     method:"POST",
-    //     headers:{
-    //         "content-type":"application/json"
-    //     },
-    //     body:JSON.stringify(formData)
-    // })
-    // .then(res=>res.json())
-    // .then(data=>{
-    //     console.log(data)
-    // })
+    fetch("http://localhost:5000/products", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.insertedId) {
+          toast.success("Data Successfully Added to Server");
+        }
+        form.reset();
+      });
   };
 
   return (
@@ -72,12 +78,12 @@ const AddProduct = () => {
             {/* Item Name */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Item Name
+              Product Title
               </label>
               <input
                 type="text"
                 name="itemName"
-                placeholder="Enter item name"
+                placeholder="Enter Your Product Title"
                 className="w-full px-4 py-3 my-2 border bg-white border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
@@ -88,13 +94,20 @@ const AddProduct = () => {
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Category Name
               </label>
-              <input
-                type="text"
+              <select
                 name="categoryName"
-                placeholder="Enter category name"
-                className="w-full px-4 py-3 my-2 border bg-white border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 *:text-black py-3 my-2 border bg-white border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
-              />
+              >
+                <option value="">Select a category</option>
+                <option value="Food">Volleyball</option>
+                <option value="Food">Cricket</option>
+                <option value="Food">Shoes & Boot</option>
+                <option value="Fitness">Football</option>
+                <option value="Fitness">More</option>
+                <option value="Shoes & Boots">Fitness</option>
+                {/* Add more categories as needed */}
+              </select>
             </div>
 
             {/* Price */}
@@ -213,7 +226,7 @@ const AddProduct = () => {
               type="submit"
               className="w-full bg-blue-600 text-white py-4 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
-             Add Now
+              Add Now
             </button>
           </div>
         </form>
